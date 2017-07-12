@@ -1,6 +1,6 @@
 # Smrthme
 
-Working on a smarthome controller that is infinite adjustable by using node, the asus tinker board and a web interface. 
+Working on a smarthome controller that is "infinite" adjustable by using node, the asus tinker board and a web interface. 
 
 
 ## TODO
