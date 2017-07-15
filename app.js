@@ -7,7 +7,7 @@ var http = require('http'),
     fs = require('fs'),
     gpio = require("tinker-gpio");
 
-var lastState;
+var lastState=0;
 var bodyParser = require('body-parser');
 
 
@@ -22,10 +22,11 @@ app.listen(3000, function () {
 app.use(bodyParser.urlencoded({extended : false}));
 
 app.post('/', function(req, res) {
-    console.log(JSON.stringify(req.body));
+    //console.log(JSON.stringify(req.body));
     //res.sendStatus(200);
 
-    res.redirect(req.get('referer'));
+    res.type('text/plain');
+    res.send("Pin set to "+lastState);
     res.end();
     // sending a response does not pause the function
     set();
@@ -45,7 +46,7 @@ function set() {
 
 function setPinTo(state) {
     console.log("Pin sett to "+state);
-    if (state === 1 || state === 0) {
+    /*if (state === 1 || state === 0) {
         gpio.open(7, "output", function (err) {		// Open pin 7 for output
             gpio.write(7, state, function () {		// Set pin 7 to ether heigh or low
                 gpio.close(7);				        // Close pin 7
@@ -53,5 +54,5 @@ function setPinTo(state) {
         })
     } else {
         console.log("Unhallowed state parameter");
-    }
+    }*/
 }
