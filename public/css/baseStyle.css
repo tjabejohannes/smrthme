@@ -26,12 +26,16 @@ button {
 }
 
 #lightbowle{
-    preserveAspectRatio: "xMidYMid meet"
+    margin-top: 10%;
+    width: 25%;
 }
 
-svg {
-    margin-top: 20%;
+#execute{
+    height: 200px;
+    width: auto;
 }
+
+
 /*button:active{
     background:red;
 }
@@ -42,7 +46,6 @@ button:hover{
 
 @media screen and (max-aspect-ratio: 8/10) {
     #lightbowle{
-        width: 60%;
-        height: auto;
+        width: 100%;
     }
 }

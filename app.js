@@ -2,36 +2,48 @@
  * Created by LittleGpNator on 12/07/2017.
  */
 const express = require('express');
-const app = express();
-var http = require('http'),
+var app = require('express')(),
+    http = require('http').Server(app),
     fs = require('fs'),
     gpio = require("tinker-gpio");
 
 var lastState=0;
 var bodyParser = require('body-parser');
 
+var io = require('socket.io')(http);
+
 
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({extended : false}));
 
-
-app.listen(3000, function () {
+http.listen(3000, function () {
     console.log('Example app listening on port 3000!')
 });
 
-
-app.use(bodyParser.urlencoded({extended : false}));
+io.on('connection', function(socket){
+    console.log('a user connected');
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
+});
 
 app.post('/', function(req, res) {
-    //console.log(JSON.stringify(req.body));
-    //res.sendStatus(200);
-    set();
+
+
+    setPin();
     res.type('text/plain');
     res.send(""+lastState);
     res.end();
     // sending a response does not pause the function
 });
 
-function set() {
+app.get('/',function (req, res) {
+    res.type('text/plain');
+    res.send(""+lastState);
+    res.end();
+});
+
+function setPin() {
     var tempState;
     if (lastState === 0){
         setPinTo(1);
@@ -45,6 +57,7 @@ function set() {
 
 function setPinTo(state) {
     console.log("Pin sett to "+state);
+    //only workes if you have gpio-pins on a Asus tinkerboard
     /*if (state === 1 || state === 0) {
         gpio.open(7, "output", function (err) {		// Open pin 7 for output
             gpio.write(7, state, function () {		// Set pin 7 to ether heigh or low
