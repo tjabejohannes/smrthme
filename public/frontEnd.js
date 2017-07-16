@@ -2,54 +2,76 @@
  * Created by LittleGpNator on 15/07/2017.
  */
 
-
+var lastStatReg;
 
 $(document).ready(function () {
-    $("#execute").click(function (e) {
+    getState();
+    $("#executable").click(function (e) {
         e.preventDefault();
-        $.ajax({
-            type: "POST",
-            url: "/",
-            data: {id:"hallo Server!"},
-            success: function (result) {
-                var resultNow = result;
-                console.log(result);
-
-                if (result === "0"){
-                    setSVG('off');
-                    //document.getElementById("title").style.color = "white";
-                    document.body.style.backgroundColor  = "black";
-                }else{
-                    setSVG('on');
-                    //document.getElementById("title").style.color = "black";
-                    document.body.style.backgroundColor = "white";
-                }
-            },
-            complete: function (xhr, status) {  	// code to run regardless of success or failure
-                console.log("The request is complete!");
-            }
-        });
+        postState();
     });
 });
 
+function postState() {
+    $.ajax({
+        type: "POST",
+        url: "/",
+        success: function (result) {
+
+            if (result === "0"){
+                setSVG('off');
+            }else{
+                setSVG('on');
+            }
+        },
+        complete: function (xhr, status) {  	// code to run regardless of success or failure
+            console.log("The request is complete!");
+        }
+    });
+}
+
+function getState() {
+    $.ajax({
+        type: "GET",
+        url: "/getState",
+        success: function (result) {
+
+            if (result === "0"){
+                setSVG('off');
+            }else{
+                setSVG('on');
+            }
+        },
+        complete: function (xhr, status) {  	// code to run regardless of success or failure
+            console.log("The request is complete!");
+        }
+    });
+}
+
 function setSVG(state) {
+    lastStatReg = state;
     var starLines = "";
     var mainLogoBody = "";
     if (state === "on"){
         starLines='#e1a741';
         mainLogoBody=starLines;
+        document.body.style.backgroundColor = "white";
     }else{
         starLines='black';
         mainLogoBody='white';
+        document.body.style.backgroundColor  = "black";
     }
     document.getElementById("starEf").setAttribute('style', 'fill: '+starLines+'');
     document.getElementById("mainLogoBody").setAttribute('style', 'fill: '+mainLogoBody+'');
-    socket.emit('pin has been set', state);
+    socket.emit('pinHasBeenSet', state);
 }
 
+
 $(function () {
-    var socket = io();
-    socket.on('pin has been set', function(msg){
-        console.log(msg);
+
+    socket.on('pinHasBeenSetTo', function(stateSend){
+        if (stateSend !== lastStatReg){
+            setSVG(stateSend);
+        }
     });
 });

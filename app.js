@@ -25,6 +25,9 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
         console.log('user disconnected');
     });
+    socket.on('pinHasBeenSet', function(msg){
+        io.emit('pinHasBeenSetTo', msg);
+    });
 });
 
 app.post('/', function(req, res) {
@@ -37,7 +40,7 @@ app.post('/', function(req, res) {
     // sending a response does not pause the function
 });
 
-app.get('/',function (req, res) {
+app.get('/getState',function (req, res) {
     res.type('text/plain');
     res.send(""+lastState);
     res.end();
