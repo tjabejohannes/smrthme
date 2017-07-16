@@ -44,5 +44,12 @@ function setSVG(state) {
     }
     document.getElementById("starEf").setAttribute('style', 'fill: '+starLines+'');
     document.getElementById("mainLogoBody").setAttribute('style', 'fill: '+mainLogoBody+'');
-
+    socket.emit('pin has been set', state);
 }
+
+$(function () {
+    var socket = io();
+    socket.on('pin has been set', function(msg){
+        console.log(msg);
+    });
+});
