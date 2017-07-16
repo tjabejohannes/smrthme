@@ -1,0 +1,48 @@
+
+
+h1 {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 26.4px;
+    color: white;
+}
+body {
+    text-align: center;
+    background-color: black;
+}
+
+
+button {
+    border: none;
+    color: white;
+    padding: 10% 32%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+#lightbowle{
+    preserveAspectRatio: "xMidYMid meet"
+}
+
+svg {
+    margin-top: 20%;
+}
+/*button:active{
+    background:red;
+}
+
+button:hover{
+    background:lightcoral;
+}*/
+
+@media screen and (max-aspect-ratio: 8/10) {
+    #lightbowle{
+        width: 60%;
+        height: auto;
+    }
+}

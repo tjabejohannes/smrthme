@@ -24,12 +24,11 @@ app.use(bodyParser.urlencoded({extended : false}));
 app.post('/', function(req, res) {
     //console.log(JSON.stringify(req.body));
     //res.sendStatus(200);
-
+    set();
     res.type('text/plain');
-    res.send("Pin set to "+lastState);
+    res.send(""+lastState);
     res.end();
     // sending a response does not pause the function
-    set();
 });
 
 function set() {
