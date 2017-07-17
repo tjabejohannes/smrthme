@@ -1,5 +1,4 @@
 
-
 h1 {
     font-family: Verdana, Geneva, sans-serif;
     font-size: 24px;
@@ -9,11 +8,11 @@ h1 {
     line-height: 26.4px;
     color: white;
 }
+
 body {
     text-align: center;
     background-color: black;
 }
-
 
 button {
     border: none;
@@ -25,21 +24,20 @@ button {
     font-size: 16px;
 }
 
-#lightbowle{
+#lightbulb {
     margin-top: 10%;
     width: 25%;
-    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
 }
 
-#lightbowlDiv{
-    height: 100%;
-    width: 100%;
-}
-#executable{
+#lightbulbDiv {
     height: 100%;
     width: 100%;
 }
 
+#executable {
+    height: 100%;
+    width: 100%;
+}
 
 /*button:active{
     background:red;
@@ -50,7 +48,7 @@ button:hover{
 }*/
 
 @media screen and (max-aspect-ratio: 8/10) {
-    #lightbowle{
+    #lightbulb {
         width: 100%;
     }
 }

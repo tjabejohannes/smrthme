@@ -3,6 +3,7 @@
  */
 
 var lastStatReg="off";
+var socket = io();
 
 $(document).ready(function () {
     getAndSettState();
@@ -29,7 +30,6 @@ function postStateChange() {
             }
         },
         complete: function (xhr, status) {  	// code to run regardless of success or failure
-            console.log("The request is complete!");
             socket.emit('pinHasBeenSet', lastStatReg);
         }
     });
@@ -42,13 +42,11 @@ function getAndSettState() {
         url: "/getState",
         success: function (result) {
             var stateNow =result;
-            console.log(stateNow+"  =  "+lastStatReg);
             if (stateNow !== lastStatReg){
                 setSVG(stateNow);
             }
         },
         complete: function (xhr, status) {  	// code to run regardless of success or failure
-            console.log("The get request is complete!");
         }
     });
 }

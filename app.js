@@ -5,12 +5,10 @@ const express = require('express');
 var app = require('express')(),
     http = require('http').Server(app),
     fs = require('fs'),
-    gpio = require("tinker-gpio");
-
-var lastState="off";
-var bodyParser = require('body-parser');
-
-var io = require('socket.io')(http);
+    gpio = require("tinker-gpio"),
+    lastState="off",
+    bodyParser = require('body-parser'),
+    io = require('socket.io')(http);
 
 
 app.use(express.static(__dirname + '/public'));
