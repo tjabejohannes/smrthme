@@ -7,7 +7,7 @@ var app = require('express')(),
     fs = require('fs'),
     gpio = require("tinker-gpio");
 
-var lastState=0;
+var lastState="off";
 var bodyParser = require('body-parser');
 
 var io = require('socket.io')(http);
@@ -31,8 +31,6 @@ io.on('connection', function(socket){
 });
 
 app.post('/', function(req, res) {
-
-
     setPin();
     res.type('text/plain');
     res.send(""+lastState);
@@ -48,12 +46,12 @@ app.get('/getState',function (req, res) {
 
 function setPin() {
     var tempState;
-    if (lastState === 0){
+    if (lastState === "off"){
         setPinTo(1);
-        tempState=1;
+        tempState="on";
     }else {
         setPinTo(0);
-        tempState=0;
+        tempState="off";
     }
     lastState=tempState;
 }

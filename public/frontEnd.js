@@ -2,52 +2,58 @@
  * Created by LittleGpNator on 15/07/2017.
  */
 
-var lastStatReg;
+var lastStatReg="off";
 
 $(document).ready(function () {
-    getState();
+    getAndSettState();
+
     $("#executable").click(function (e) {
         e.preventDefault();
-        postState();
+        postStateChange();
     });
 });
 
-function postState() {
+//posts to the server that the state has changed
+function postStateChange() {
     $.ajax({
         type: "POST",
         url: "/",
         success: function (result) {
 
-            if (result === "0"){
+            if (result === "off"){
                 setSVG('off');
+                lastStatReg='off';
             }else{
                 setSVG('on');
+                lastStatReg='on';
             }
         },
         complete: function (xhr, status) {  	// code to run regardless of success or failure
             console.log("The request is complete!");
+            socket.emit('pinHasBeenSet', lastStatReg);
         }
     });
 }
 
-function getState() {
+//Asks server for current state and if its note the activ state it svitjes state.
+function getAndSettState() {
     $.ajax({
         type: "GET",
         url: "/getState",
         success: function (result) {
-
-            if (result === "0"){
-                setSVG('off');
-            }else{
-                setSVG('on');
+            var stateNow =result;
+            console.log(stateNow+"  =  "+lastStatReg);
+            if (stateNow !== lastStatReg){
+                setSVG(stateNow);
             }
         },
         complete: function (xhr, status) {  	// code to run regardless of success or failure
-            console.log("The request is complete!");
+            console.log("The get request is complete!");
         }
     });
 }
 
+//function that sett's the svg "image" to the one correlating to the state given in the parameter.
 function setSVG(state) {
     lastStatReg = state;
     var starLines = "";
@@ -63,15 +69,15 @@ function setSVG(state) {
     }
     document.getElementById("starEf").setAttribute('style', 'fill: '+starLines+'');
     document.getElementById("mainLogoBody").setAttribute('style', 'fill: '+mainLogoBody+'');
-    socket.emit('pinHasBeenSet', state);
 }
 
 
-$(function () {
 
-    socket.on('pinHasBeenSetTo', function(stateSend){
-        if (stateSend !== lastStatReg){
-            setSVG(stateSend);
+//function that reacts on brodcast
+$(function () {
+    socket.on('pinHasBeenSetTo', function(state){
+        if (state !== lastStatReg){
+            setSVG(state);
         }
     });
 });
